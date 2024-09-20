@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小紅書經營定位測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>小紅書經營定位測試</h1>
+
+    <!-- 問卷調查部分 -->
+    <div id="quiz">
+        <div class="question">
+            <label>你喜歡製作哪種形式的內容？</label>
+            <select id="content-form">
+                <option value="video">視頻</option>
+                <option value="photo">圖片</option>
+                <option value="text">文字</option>
+                <option value="audio">音頻</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label>你想針對哪類受眾？</label>
+            <select id="audience">
+                <option value="fashion">時尚與穿搭</option>
+                <option value="beauty">美容與護膚</option>
+                <option value="travel">旅遊與探店</option>
+                <option value="food">美食與烹飪</option>
+                <option value="lifestyle">生活方式</option>
+                <option value="other">其他</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label>你計劃發布內容的頻率？</label>
+            <select id="frequency">
+                <option value="daily">每天</option>
+                <option value="weekly">每週</option>
+                <option value="monthly">每月</option>
+                <option value="occasionally">偶爾</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label>你的興趣是什麼？（可選）</label>
+            <input type="text" id="interest" placeholder="請填寫你的興趣">
+        </div>
+
+        <button onclick="analyzeResult()">提交測試</button>
+    </div>
+
+    <!-- 結果展示區 -->
+    <div id="result"></div>
+
+    <script>
+        function analyzeResult() {
+            // 取得用戶選擇的數據
+            const contentForm = document.getElementById('content-form').value;
+            const audience = document.getElementById('audience').value;
+            const frequency = document.getElementById('frequency').value;
+            const interest = document.getElementById('interest').value.trim();  // 取得興趣
+
+            let recommendation = '';
+
+            // 根據內容形式、受眾、頻率和興趣推薦小紅書的定位
+            if (contentForm === 'video') {
+                if (audience === 'fashion' && frequency === 'daily') {
+                    recommendation = '你可以考慮在小紅書上分享每日穿搭視頻，這是一個非常流行的主題。';
+                } else if (audience === 'beauty') {
+                    recommendation = '在小紅書上發布美容護膚視頻是個很好的選擇，特別是如果你能保持每週的更新頻率。';
+                } else if (audience === 'travel') {
+                    recommendation = '你可以分享旅遊探店的視頻，並加入一些地點推薦，這會吸引很多粉絲。';
+                } else if (audience === 'food') {
+                    recommendation = '美食與烹飪視頻在小紅書上也很受歡迎，可以展示不同菜餚的做法。';
+                } else {
+                    recommendation = '視頻類型適合多樣化的主題，你可以根據你的興趣和受眾進行靈活創作。';
+                }
+            } else if (contentForm === 'photo') {
+                if (audience === 'fashion' || audience === 'beauty') {
+                    recommendation = '小紅書上的時尚與美容圖片內容非常受歡迎，分享日常穿搭或美容護膚產品照會吸引很多關注。';
+                } else {
+                    recommendation = '圖片形式適合分享各類內容，小紅書是這類分享的理想平台。';
+                }
+            } else if (contentForm === 'text') {
+                if (audience === 'lifestyle') {
+                    recommendation = '你可以在小紅書上寫一些生活方式的文字內容，比如個人經驗、心得分享等。';
+                } else {
+                    recommendation = '考慮在小紅書上撰寫有關你的主題的心得與評論，這有助於與受眾建立更深的聯繫。';
+                }
+            } else if (contentForm === 'audio') {
+                recommendation = '雖然小紅書目前的主流是視頻和圖片內容，但你可以結合音頻內容製作視頻，例如ASMR或語音解說。';
+            }
+
+            // 如果用戶填寫了興趣，進一步分析並加上興趣考量
+            if (interest) {
+                recommendation += `<br><strong>根據你的興趣「${interest}」：</strong> 你可以在小紅書上分享相關內容，吸引和你有相同興趣的受眾。`;
+            }
+
+            // 動態更新結果區域
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h2>分析結果</h2>
+                <p>根據你的選擇，我們推薦的小紅書定位是：</p>
+                <p><strong>${recommendation}</strong></p>
+            `;
+        }
+    </script>
+
+</body>
+</html>
